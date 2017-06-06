@@ -20,7 +20,7 @@ public class PropertiesManager {
      * 
      * @throws IOException Indica un error en la lectura del fichero (no encontrado)
      */
-    public void loadProperties() throws IOException {
+    public void loadProperties() throws IOException{
         InputStream inputStream=null;
         try {
             Properties prop = new Properties();

@@ -5,15 +5,28 @@
  */
 package net.juanxxiii.j23gameengine.gui;
 
+import gameobjects.Enemigo;
+import gameobjects.Enemigo2;
+import gameobjects.Enemigo3;
+import gameobjects.Enemigo4;
+import gameobjects.EnemigoInterface;
+import gameobjects.JefeFinal;
 import gameobjects.Spaceship;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import net.juanxxiii.j23gameengine.util.SoundPlayer;
 
@@ -21,16 +34,18 @@ import net.juanxxiii.j23gameengine.util.SoundPlayer;
  *
  * @author Profesor
  */
-public class JPGameScreen extends javax.swing.JPanel implements Runnable {
+public class JPGameScreen extends javax.swing.JPanel implements Runnable, MouseListener {
 
     BufferedImage bg;//Imagen de fondo
     Spaceship nave;
+    Vector<EnemigoInterface> vectorEnemigos = new Vector<EnemigoInterface>();
 
     /**
      * Creates new form JPGameScreen
      */
     public JPGameScreen() {
         initComponents();
+        addMouseListener(this);
         //Cargamos los recursos
         loadResources();
         //Hacemos que el panel sea 'focusable' para aceptar eventos
@@ -112,6 +127,11 @@ public class JPGameScreen extends javax.swing.JPanel implements Runnable {
         g2d.drawImage(bg, 0, 0, null);
         //Pinta los elementos
         g2d.drawImage(nave.getNave(), nave.getxNave(), nave.getyNave(), null);
+        for (EnemigoInterface vectorEnemigo : vectorEnemigos) {
+            vectorEnemigo.dibujate(g2d);
+        }
+        
+       
     }
 
     /**
@@ -165,6 +185,35 @@ public class JPGameScreen extends javax.swing.JPanel implements Runnable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        try {
+            vectorEnemigos.add(new JefeFinal(50,e.getX(), e.getY(),"megaman.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(JPGameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
